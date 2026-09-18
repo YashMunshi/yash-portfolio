@@ -26,3 +26,77 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installProm
 $('#install-app').addEventListener('click',async()=>{if(installPrompt){await installPrompt.prompt();installPrompt=null;$('#install-app').hidden=true;}});
 window.addEventListener('appinstalled',()=>{$('#install-app').hidden=true;installPrompt=null;});
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
+
+// A playful portfolio puzzle, not authentication or protection for private data.
+const ctfGate = $('#unlock');
+const ctfContent = $('#profile-content');
+const ctfAnswer = $('#ctf-answer');
+const ctfFeedback = $('#ctf-feedback');
+const ctfSessionKey = 'yash-portfolio-ctf-v1';
+let profileUnlocked = false;
+function unlockProfile(moveFocus = false) {
+  profileUnlocked = true;
+  ctfContent.hidden = false;
+  $('#ctf-puzzle').hidden = true;
+  $('#ctf-replay').hidden = false;
+  ctfGate.classList.add('ctf-solved');
+  ctfFeedback.textContent = 'Flag captured. Welcome in — my full profile is unlocked!';
+  try { sessionStorage.setItem(ctfSessionKey, 'unlocked'); } catch {}
+  if (moveFocus) {
+    const heading = $('#work h2');
+    heading.tabIndex = -1;
+    heading.focus({ preventScroll: true });
+    heading.scrollIntoView({ behavior: 'auto', block: 'start' });
+  }
+}
+$('#ctf-form').addEventListener('submit', event => {
+  event.preventDefault();
+  if (ctfAnswer.value.trim().toLowerCase() === 'flag{defenses}') {
+    ctfAnswer.removeAttribute('aria-invalid');
+    unlockProfile(true);
+  } else {
+    ctfAnswer.setAttribute('aria-invalid', 'true');
+    ctfFeedback.textContent = 'Not quite! Use flag{word}, with the word after “Stronger”. The hint below has the answer.';
+    ctfAnswer.focus();
+  }
+});
+ctfAnswer.addEventListener('input', () => {
+  ctfAnswer.removeAttribute('aria-invalid');
+  ctfFeedback.textContent = '';
+});
+// Keep navigation and resume links on the challenge until it is solved.
+document.addEventListener('click', event => {
+  const link = event.target.closest('a');
+  if (!link || profileUnlocked) return;
+  const href = link.getAttribute('href');
+  if (['#work', '#experience', '#about', '#contact', '/Yash_Munshi_Resume.pdf'].includes(href)) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (dialog.open) dialog.close();
+    mobileNav.hidden = true;
+    menu.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-label', 'Open navigation');
+    ctfFeedback.textContent = 'Capture the flag to unlock this part of my profile.';
+    ctfGate.scrollIntoView({ behavior: 'auto', block: 'start' });
+    ctfAnswer.focus({ preventScroll: true });
+  }
+}, true);
+$('#ctf-replay').addEventListener('click', () => {
+  profileUnlocked = false;
+  try { sessionStorage.removeItem(ctfSessionKey); } catch {}
+  ctfContent.hidden = true;
+  $('#ctf-puzzle').hidden = false;
+  $('#ctf-replay').hidden = true;
+  ctfGate.classList.remove('ctf-solved');
+  $('#ctf-form').reset();
+  $('.ctf-hint').open = false;
+  ctfFeedback.textContent = '';
+  ctfAnswer.removeAttribute('aria-invalid');
+  history.replaceState(null, '', '#unlock');
+  ctfGate.scrollIntoView({ behavior: 'auto', block: 'start' });
+  ctfAnswer.focus({ preventScroll: true });
+});
+try { if (sessionStorage.getItem(ctfSessionKey) === 'unlocked') unlockProfile(); } catch {}
+if (!profileUnlocked && ['#work', '#experience', '#about', '#contact'].includes(location.hash)) {
+  ctfGate.scrollIntoView({ behavior: 'auto', block: 'start' });
+}
