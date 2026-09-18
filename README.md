@@ -35,52 +35,6 @@ The interface pairs a terminal-inspired profile with project cards, professional
 
 Additional work includes Linux kernel development, Java file synchronization, and MATLAB robot navigation.
 
-## Run locally
-
-With Python 3 installed, clone the repository and serve the `dist` directory:
-
-```sh
-git clone https://github.com/YashMunshi/yash-portfolio.git
-cd yash-portfolio
-python3 -m http.server 8000 --directory dist
-```
-
-Open [localhost:8000](http://localhost:8000).
-
-## Deploy to Vercel
-
-Import this repository with the following settings:
-
-| Setting | Value |
-| --- | --- |
-| Framework preset | Other |
-| Root directory | Repository root |
-| Build command | None — enable the override and leave the field empty |
-| Output directory | `dist` |
-
-The repository already contains the files to publish. No compilation step is needed. The included `vercel.json` sets the framework, output directory, and response headers.
-
-**Production:** [yash-munshi-portfolio.vercel.app](https://yash-munshi-portfolio.vercel.app)
-
-## Customize
-
-| File | Purpose |
-| --- | --- |
-| `dist/index.html` | Portfolio content, projects, experience, and links |
-| `dist/styles.css` | Colors, typography, layout, and responsive styles |
-| `dist/app.js` | Filters, navigation, profile controls, and installation |
-| `dist/manifest.webmanifest` | App name, icons, and installation metadata |
-| `dist/sw.js` | Service worker and offline cache |
-| `dist/Yash_Munshi_Resume.pdf` | Downloadable resume |
-| `dist/favicon.svg` and `dist/icon-*.png` | Browser and app icons |
-| `vercel.json` | Hosting configuration and security headers |
-
-Edit the files directly in `dist`. When changing cached assets, update the cache version in `dist/sw.js` so the next service worker activation clears the previous cache.
-
-## Design inspiration
-
-Inspired by the portfolios of [Brittany Chiang](https://brittanychiang.com/), [Bruno Simon](https://bruno-simon.com/), and [Lee Robinson](https://leerob.com/).
-
 ## Contact
 
 [Yash Munshi](https://www.linkedin.com/in/yashmunshi/) · [yashmunshi2@gmail.com](mailto:yashmunshi2@gmail.com)
