@@ -8,7 +8,17 @@ $$('a', mobileNav).forEach(a => a.addEventListener('click', () => { mobileNav.hi
 document.addEventListener('keydown', e => {if(e.key === 'Escape' && !mobileNav.hidden){mobileNav.hidden=true;menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open navigation');menu.focus();}});
 const profiles = {security:'At ACL Digital, I implemented authentication, entity-scoped access, and defense-in-depth controls for Forge.',systems:'I build in Python, Java, TypeScript, and C/C++. My systems work includes file synchronization and Linux kernel projects.',education:'B.S. Computer Science (Cybersecurity), Arizona State University. GPA: 3.91 / 4.0. Expected graduation: May 2027.'};
 $$('[data-profile]').forEach(b => b.addEventListener('click', () => {$('#console-output').textContent = profiles[b.dataset.profile];$$('[data-profile]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));
-$$('[data-filter]').forEach(b => b.addEventListener('click', () => {const category = b.dataset.filter;$$('[data-filter]').forEach(x => {x.classList.toggle('active',x===b);x.setAttribute('aria-pressed', String(x===b));});let count=0;$$('.project').forEach(card => {card.hidden = category !== 'all' && card.dataset.category !== category;if(!card.hidden)count++;});$('#project-count').textContent = `${count} ${count===1?'project':'projects'}`;}));
+$$('[data-filter]').forEach(b => b.addEventListener('click', () => {
+  const update = () => {
+    const category = b.dataset.filter;
+    $$('[data-filter]').forEach(x => {x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});
+    let count=0;
+    $$('.project').forEach(card => {card.hidden=category!=='all'&&card.dataset.category!==category;if(!card.hidden)count++;});
+    $('#project-count').textContent = `${count} ${count===1?'project':'projects'}`;
+  };
+  if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(update);
+  else update();
+}));
 const dialog=$('#command-dialog'), search=$('#command-search');
 function openCommand(){search.value='';filterCommands();dialog.showModal();search.focus();}
 function filterCommands(){const q=search.value.trim().toLowerCase();let count=0;$$('.command-links a').forEach(a=>{a.hidden=!a.textContent.toLowerCase().includes(q);if(!a.hidden)count++;});$('#command-empty').hidden=count>0;}
@@ -37,6 +47,7 @@ let profileUnlocked = false;
 function unlockProfile(moveFocus = false) {
   profileUnlocked = true;
   ctfContent.hidden = false;
+  if (moveFocus) ctfContent.classList.add('just-unlocked');
   $('#ctf-puzzle').hidden = true;
   $('#ctf-replay').hidden = false;
   ctfGate.classList.add('ctf-solved');
@@ -85,6 +96,7 @@ $('#ctf-replay').addEventListener('click', () => {
   profileUnlocked = false;
   try { sessionStorage.removeItem(ctfSessionKey); } catch {}
   ctfContent.hidden = true;
+  ctfContent.classList.remove('just-unlocked');
   $('#ctf-puzzle').hidden = false;
   $('#ctf-replay').hidden = true;
   ctfGate.classList.remove('ctf-solved');
