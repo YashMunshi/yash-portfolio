@@ -31,10 +31,6 @@ $$('.command-links a').forEach(a=>a.addEventListener('click',()=>dialog.close())
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
 $('#copy-email').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('yashmunshi2@gmail.com');$('#copy-status').textContent='Email copied';}catch{$('#copy-status').textContent='Select the email address above to copy it.';}});
 if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){$$('header nav a').forEach(a=>{if(a.hash===`#${entry.target.id}`)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});}}},{rootMargin:'-15% 0px -55% 0px'});$$('main section[id], #experience').forEach(section=>observer.observe(section));}
-let installPrompt;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('#install-app').hidden=false;});
-$('#install-app').addEventListener('click',async()=>{if(installPrompt){await installPrompt.prompt();installPrompt=null;$('#install-app').hidden=true;}});
-window.addEventListener('appinstalled',()=>{$('#install-app').hidden=true;installPrompt=null;});
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
 
 // A playful portfolio puzzle, not authentication or protection for private data.
