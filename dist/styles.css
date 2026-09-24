@@ -43,3 +43,8 @@ dialog{background:#111;color:#eee;border:1px solid #777;border-radius:0;padding:
 .skills-section .skill-tags li{max-width:100%;border:1px solid #999;padding:3px 9px;color:#eee;background:transparent;font:14px/1.5 var(--mono);overflow-wrap:anywhere}
 @media(max-width:1100px){.skills-section .skill-grid{gap:28px}.skills-section h3{font-size:21px}}
 @media(max-width:780px){.skills-section{padding:56px 0 64px}.skills-section .skill-grid{grid-template-columns:1fr;gap:32px}.skills-section h2{margin-bottom:30px;letter-spacing:-2px}.skills-section h3{font-size:23px}.skills-section .skill-tags{gap:8px 6px}.skills-section .skill-tags li{padding:4px 9px}}
+
+/* Keep the section index centered in the right half of the header. */
+header .header-monogram{font:500 22px/1 var(--mono);letter-spacing:-2px;display:inline-flex;align-items:center;min-height:44px;min-width:44px}
+@media(min-width:1600px){header nav{position:absolute;left:75%;transform:translateX(-50%);gap:24px}header .header-actions{margin-left:auto}header .command-trigger span{display:none}}
+@media(min-width:781px) and (max-width:1599px){header nav{margin-left:auto;gap:20px}header .command-trigger span{display:none}header .header-actions{gap:14px}}

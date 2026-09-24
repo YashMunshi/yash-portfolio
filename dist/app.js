@@ -76,7 +76,7 @@ document.addEventListener('click', event => {
   const link = event.target.closest('a');
   if (!link || profileUnlocked) return;
   const href = link.getAttribute('href');
-  if (['#work', '#experience', '#about', '#contact', '/Yash_Munshi_Resume.pdf'].includes(href)) {
+  if (['#work', '#experience', '#about', '#skills', '#contact', '/Yash_Munshi_Resume.pdf'].includes(href)) {
     event.preventDefault();
     event.stopImmediatePropagation();
     if (dialog.open) dialog.close();
@@ -105,6 +105,6 @@ $('#ctf-replay').addEventListener('click', () => {
   ctfAnswer.focus({ preventScroll: true });
 });
 try { if (sessionStorage.getItem(ctfSessionKey) === 'unlocked') unlockProfile(); } catch {}
-if (!profileUnlocked && ['#work', '#experience', '#about', '#contact'].includes(location.hash)) {
+if (!profileUnlocked && ['#work', '#experience', '#about', '#skills', '#contact'].includes(location.hash)) {
   ctfGate.scrollIntoView({ behavior: 'auto', block: 'start' });
 }
