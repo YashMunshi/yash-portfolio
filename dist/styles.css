@@ -44,7 +44,16 @@ dialog{background:#111;color:#eee;border:1px solid #777;border-radius:0;padding:
 @media(max-width:1100px){.skills-section .skill-grid{gap:28px}.skills-section h3{font-size:21px}}
 @media(max-width:780px){.skills-section{padding:56px 0 64px}.skills-section .skill-grid{grid-template-columns:1fr;gap:32px}.skills-section h2{margin-bottom:30px;letter-spacing:-2px}.skills-section h3{font-size:23px}.skills-section .skill-tags{gap:8px 6px}.skills-section .skill-tags li{padding:4px 9px}}
 
-/* Keep the section index centered in the right half of the header. */
-header .header-monogram{font:500 22px/1 var(--mono);letter-spacing:-2px;display:inline-flex;align-items:center;min-height:44px;min-width:44px}
-@media(min-width:1600px){header nav{position:absolute;left:75%;transform:translateX(-50%);gap:24px}header .header-actions{margin-left:auto}header .command-trigger span{display:none}}
-@media(min-width:781px) and (max-width:1599px){header nav{margin-left:auto;gap:20px}header .command-trigger span{display:none}header .header-actions{gap:14px}}
+/* Inset header aligned to a centered content area, inspired by the reference. */
+header{height:80px;padding-inline:max(32px,calc((100% - 1200px)/2));gap:28px}
+header .header-monogram{font:500 26px/1 var(--mono);letter-spacing:-2px;display:inline-flex;align-items:center;min-height:44px;min-width:48px}
+header nav{margin-left:auto;gap:24px;font:500 16px/1.5 var(--mono);letter-spacing:1px;text-transform:uppercase}
+header nav a{display:inline-flex;align-items:center;min-height:44px}
+header nav a[aria-current=true]::after{bottom:0}
+header .header-actions{gap:16px}
+header .command-trigger{font-size:16px;min-height:44px}
+header .command-trigger span{display:none}
+header .nav-resume{font-size:16px}
+@media(max-width:1100px){header{gap:20px;padding-inline:28px}header nav{gap:18px;letter-spacing:.5px}header .header-actions{gap:12px}}
+@media(max-width:1000px){header{height:72px;padding-inline:24px}header nav{display:none}header .header-actions{margin-left:auto}header .menu-toggle{display:block}header .command-trigger kbd{display:none}.mobile-nav{top:72px}.mobile-nav a{font:500 18px/1.5 var(--mono);letter-spacing:1px;text-transform:uppercase}}
+@media(max-width:380px){header{padding-inline:16px;gap:12px}header .header-actions{gap:10px}}
